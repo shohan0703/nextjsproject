@@ -8,22 +8,22 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="w-full bg-[#0d0e10]">
+    <header className="sticky top-0 z-50 w-full border-b border-[#25272c] bg-[#0d0e10]/95 backdrop-blur-md">
       <nav className="relative mx-auto max-w-[1280px] px-6 sm:px-8 lg:px-6">
 
        
         <div className="flex h-20 items-center justify-between">
 
-         
+          
           <div className="flex items-center gap-3">
 
-           
+          
             <button
               type="button"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
               aria-expanded={menuOpen}
-              className="flex h-9 w-9 items-center justify-center rounded-md border border-[#292c31] text-white md:hidden"
+              className="flex h-9 w-9 items-center justify-center rounded-md border border-[#292c31] text-white transition hover:border-[#ccff00] md:hidden"
             >
               {menuOpen ? (
                 <svg
@@ -53,7 +53,7 @@ export default function Navbar() {
               )}
             </button>
 
-         
+            
             <Link
               href="/"
               className="flex items-center gap-2"
@@ -72,15 +72,14 @@ export default function Navbar() {
                 FITLOG
               </span>
             </Link>
-
           </div>
 
-        
+         
           <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 md:flex">
 
             <Link
               href="/"
-              className="rounded-full bg-[#16220d] px-5 py-2 text-xs font-semibold text-[#ccff00]"
+              className="rounded-full bg-[#16220d] px-5 py-2 text-xs font-semibold text-[#ccff00] transition"
             >
               Workouts
             </Link>
@@ -97,9 +96,10 @@ export default function Navbar() {
           
           <div className="hidden items-center gap-5 md:flex">
 
+            
             <Link
               href="/my-plan"
-              className="flex items-center gap-2 text-xs text-[#92959d]"
+              className="flex items-center gap-2 text-xs text-[#92959d] transition hover:text-white"
             >
               <span>Plan</span>
 
@@ -108,9 +108,10 @@ export default function Navbar() {
               </span>
             </Link>
 
+            
             <Link
               href="/my-plan"
-              className="flex items-center gap-2 text-xs text-[#92959d]"
+              className="flex items-center gap-2 text-xs text-[#92959d] transition hover:text-white"
             >
               <span>Saved</span>
 
@@ -121,15 +122,15 @@ export default function Navbar() {
 
           </div>
 
-         
+          
           <div className="w-9 md:hidden" />
-
         </div>
 
-       
+        
         {menuOpen && (
           <div className="border-t border-[#25272c] py-5 md:hidden">
 
+            
             <div className="flex flex-col gap-2">
 
               <Link
@@ -143,15 +144,17 @@ export default function Navbar() {
               <Link
                 href="/my-plan"
                 onClick={() => setMenuOpen(false)}
-                className="rounded-md px-4 py-3 text-sm font-medium text-[#92959d] hover:bg-[#16181d] hover:text-white"
+                className="rounded-md px-4 py-3 text-sm font-medium text-[#92959d] transition hover:bg-[#16181d] hover:text-white"
               >
                 My Plan
               </Link>
 
             </div>
 
+           
             <div className="mt-4 flex items-center gap-4 border-t border-[#25272c] pt-4">
 
+             
               <Link
                 href="/my-plan"
                 onClick={() => setMenuOpen(false)}
@@ -164,6 +167,7 @@ export default function Navbar() {
                 </span>
               </Link>
 
+              
               <Link
                 href="/my-plan"
                 onClick={() => setMenuOpen(false)}
@@ -171,16 +175,14 @@ export default function Navbar() {
               >
                 <span>Saved</span>
 
-                <span className="flex h-5 min-w-5 items-center justify-center rounded-full border border-[#3a3d43] px-1.5 text-[10px]">
+                <span className="flex h-5 min-w-5 items-center justify-center rounded-full border border-[#3a3d43] px-1.5 text-[10px] text-[#92959d]">
                   0
                 </span>
               </Link>
 
             </div>
-
           </div>
         )}
-
       </nav>
     </header>
   );
