@@ -110,6 +110,8 @@ export default function WorkoutDetails({
   }
 
   function handleAddToPlan() {
+    if (!workout) return;
+
     if (isInPlan(workout.id)) {
       setToast("Workout is already in today's plan");
       return;
@@ -120,6 +122,8 @@ export default function WorkoutDetails({
   }
 
   function handleSaveWorkout() {
+    if (!workout) return;
+
     if (isSaved(workout.id)) {
       setToast("Workout is already saved");
       return;
@@ -131,8 +135,6 @@ export default function WorkoutDetails({
 
   return (
     <main className="mx-auto w-full max-w-[1280px] px-6 py-12 sm:px-8 lg:px-6 lg:py-16">
-
-     
       <Link
         href="/"
         className="mb-8 inline-flex items-center gap-2 text-xs font-medium text-[#777a82] transition hover:text-white"
@@ -140,10 +142,7 @@ export default function WorkoutDetails({
         ← Back to workouts
       </Link>
 
-      
       <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
-
-        
         <div className="overflow-hidden rounded-[8px] border border-[#292c32] bg-[#16181d]">
           <div className="relative aspect-square w-full bg-[#202228]">
             <Image
@@ -157,25 +156,19 @@ export default function WorkoutDetails({
           </div>
         </div>
 
-       
         <div>
-
-         
           <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#ccff00]">
             WORKOUT DETAILS
           </p>
 
-          
           <h1 className="mt-3 text-3xl font-black uppercase tracking-[-0.03em] text-white sm:text-4xl lg:text-5xl">
             {workout.name}
           </h1>
 
-         
           <p className="mt-5 text-sm leading-6 text-[#92959d]">
             {workout.description}
           </p>
 
-         
           <div className="mt-6 flex flex-wrap gap-2">
             {workout.muscleGroups.map((group) => (
               <span
@@ -187,53 +180,22 @@ export default function WorkoutDetails({
             ))}
           </div>
 
-          
           <div className="mt-8">
             <h2 className="mb-4 text-xs font-bold uppercase tracking-[0.12em] text-white">
               KEY SPECS
             </h2>
 
             <div className="grid grid-cols-2 gap-px overflow-hidden rounded-[8px] border border-[#292c32] bg-[#292c32] sm:grid-cols-3">
-
-              <Spec
-                label="Equipment"
-                value={workout.equipment}
-              />
-
-              <Spec
-                label="Difficulty"
-                value={workout.difficulty}
-              />
-
-              <Spec
-                label="Sets"
-                value={String(workout.sets)}
-              />
-
-              <Spec
-                label="Reps"
-                value={workout.reps}
-              />
-
-              <Spec
-                label="Duration"
-                value={`${workout.duration} min`}
-              />
-
-              <Spec
-                label="Calories"
-                value={`${workout.caloriesBurned} kcal`}
-              />
-
-              <Spec
-                label="Rating"
-                value={`★ ${workout.rating}`}
-              />
-
+              <Spec label="Equipment" value={workout.equipment} />
+              <Spec label="Difficulty" value={workout.difficulty} />
+              <Spec label="Sets" value={String(workout.sets)} />
+              <Spec label="Reps" value={workout.reps} />
+              <Spec label="Duration" value={`${workout.duration} min`} />
+              <Spec label="Calories" value={`${workout.caloriesBurned} kcal`} />
+              <Spec label="Rating" value={`★ ${workout.rating}`} />
             </div>
           </div>
 
-         
           <div className="mt-8">
             <h2 className="mb-4 text-xs font-bold uppercase tracking-[0.12em] text-white">
               INSTRUCTIONS
@@ -241,14 +203,10 @@ export default function WorkoutDetails({
 
             <div className="space-y-4">
               {workout.instructions.map((instruction, index) => (
-                <div
-                  key={index}
-                  className="flex gap-4"
-                >
+                <div key={index} className="flex gap-4">
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#ccff00] text-[10px] font-bold text-black">
                     {index + 1}
                   </span>
-
                   <p className="pt-1 text-sm leading-6 text-[#92959d]">
                     {instruction}
                   </p>
@@ -257,9 +215,7 @@ export default function WorkoutDetails({
             </div>
           </div>
 
-          
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-
             <button
               type="button"
               onClick={handleAddToPlan}
@@ -270,7 +226,6 @@ export default function WorkoutDetails({
                 : "+ Add to today's plan"}
             </button>
 
-           
             <button
               type="button"
               onClick={handleSaveWorkout}
@@ -280,19 +235,16 @@ export default function WorkoutDetails({
                 ? "✓ Saved"
                 : "♡ Save for later"}
             </button>
-
           </div>
         </div>
       </div>
 
-      
       {toast && (
         <Toast
           message={toast}
           onClose={() => setToast("")}
         />
       )}
-
     </main>
   );
 }
