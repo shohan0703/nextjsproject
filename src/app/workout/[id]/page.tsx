@@ -3,7 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+
 import { useWorkout } from "@/context/WorkoutContext";
+import Toast from "@/components/Toast";
 
 type Workout = {
   id: number;
@@ -29,6 +31,7 @@ export default function WorkoutDetails({
   const [workout, setWorkout] = useState<Workout | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [toast, setToast] = useState("");
 
   const {
     addToPlan,
@@ -106,6 +109,26 @@ export default function WorkoutDetails({
     );
   }
 
+  function handleAddToPlan() {
+    if (isInPlan(workout.id)) {
+      setToast("Workout is already in today's plan");
+      return;
+    }
+
+    addToPlan(workout);
+    setToast("Workout added to today's plan");
+  }
+
+  function handleSaveWorkout() {
+    if (isSaved(workout.id)) {
+      setToast("Workout is already saved");
+      return;
+    }
+
+    saveWorkout(workout);
+    setToast("Workout saved for later");
+  }
+
   return (
     <main className="mx-auto w-full max-w-[1280px] px-6 py-12 sm:px-8 lg:px-6 lg:py-16">
 
@@ -137,22 +160,22 @@ export default function WorkoutDetails({
        
         <div>
 
-          
+         
           <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#ccff00]">
             WORKOUT DETAILS
           </p>
 
-         
+          
           <h1 className="mt-3 text-3xl font-black uppercase tracking-[-0.03em] text-white sm:text-4xl lg:text-5xl">
             {workout.name}
           </h1>
 
-        
+         
           <p className="mt-5 text-sm leading-6 text-[#92959d]">
             {workout.description}
           </p>
 
-          
+         
           <div className="mt-6 flex flex-wrap gap-2">
             {workout.muscleGroups.map((group) => (
               <span
@@ -171,6 +194,7 @@ export default function WorkoutDetails({
             </h2>
 
             <div className="grid grid-cols-2 gap-px overflow-hidden rounded-[8px] border border-[#292c32] bg-[#292c32] sm:grid-cols-3">
+
               <Spec
                 label="Equipment"
                 value={workout.equipment}
@@ -205,6 +229,7 @@ export default function WorkoutDetails({
                 label="Rating"
                 value={`★ ${workout.rating}`}
               />
+
             </div>
           </div>
 
@@ -235,10 +260,9 @@ export default function WorkoutDetails({
           
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
 
-           
             <button
               type="button"
-              onClick={() => addToPlan(workout)}
+              onClick={handleAddToPlan}
               className="flex-1 rounded-md bg-[#ccff00] px-5 py-4 text-xs font-black uppercase text-black transition hover:bg-[#b9eb00]"
             >
               {isInPlan(workout.id)
@@ -249,7 +273,7 @@ export default function WorkoutDetails({
            
             <button
               type="button"
-              onClick={() => saveWorkout(workout)}
+              onClick={handleSaveWorkout}
               className="flex-1 rounded-md border border-[#3a3d43] px-5 py-4 text-xs font-bold uppercase text-white transition hover:border-[#ccff00] hover:text-[#ccff00]"
             >
               {isSaved(workout.id)
@@ -260,6 +284,15 @@ export default function WorkoutDetails({
           </div>
         </div>
       </div>
+
+      
+      {toast && (
+        <Toast
+          message={toast}
+          onClose={() => setToast("")}
+        />
+      )}
+
     </main>
   );
 }
