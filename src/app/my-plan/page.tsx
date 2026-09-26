@@ -39,10 +39,8 @@ export default function MyPlanPage() {
   const [toast, setToast] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("duration");
 
-  
   const activeWorkouts =
     activeTab === "plan" ? plan : saved;
-
 
   const sortedWorkouts = [...activeWorkouts].sort(
     (a, b) => {
@@ -58,8 +56,6 @@ export default function MyPlanPage() {
     }
   );
 
-  
-
   const totalMinutes = activeWorkouts.reduce(
     (total, workout) => total + workout.duration,
     0
@@ -73,8 +69,6 @@ export default function MyPlanPage() {
 
   const totalWorkouts = activeWorkouts.length;
 
-
-
   const toggleCompleted = (id: number) => {
     setCompleted((current) =>
       current.includes(id)
@@ -82,8 +76,6 @@ export default function MyPlanPage() {
         : [...current, id]
     );
   };
-
-
 
   const handleRemoveFromPlan = (id: number) => {
     removeFromPlan(id);
@@ -97,8 +89,6 @@ export default function MyPlanPage() {
     );
   };
 
- 
-
   const handleRemoveFromSaved = (id: number) => {
     removeFromSaved(id);
 
@@ -107,8 +97,6 @@ export default function MyPlanPage() {
 
   return (
     <main className="mx-auto w-full max-w-[1280px] px-6 py-12 sm:px-8 lg:px-6 lg:py-16">
-
-     
 
       <div className="mb-10">
         <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#ccff00]">
@@ -124,8 +112,6 @@ export default function MyPlanPage() {
           and keep your favorite exercises ready for later.
         </p>
       </div>
-
-      
 
       <div className="mb-10 grid grid-cols-1 gap-3 sm:grid-cols-3">
 
@@ -150,12 +136,8 @@ export default function MyPlanPage() {
 
       </div>
 
-     
-
       <div className="mb-6 border-b border-[#292c32]">
         <div className="flex gap-8 overflow-x-auto">
-
-          
 
           <button
             onClick={() => setActiveTab("plan")}
@@ -181,8 +163,6 @@ export default function MyPlanPage() {
               <span className="absolute bottom-[-1px] left-0 h-[2px] w-full bg-[#ccff00]" />
             )}
           </button>
-
-          
 
           <button
             onClick={() => setActiveTab("saved")}
@@ -211,8 +191,6 @@ export default function MyPlanPage() {
 
         </div>
       </div>
-
-     
 
       <div className="mb-8 flex justify-end">
         <div className="flex items-center gap-3">
@@ -245,8 +223,6 @@ export default function MyPlanPage() {
               </option>
             </select>
 
-            
-
             <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#777a82]">
               <svg
                 width="12"
@@ -268,8 +244,6 @@ export default function MyPlanPage() {
           </div>
         </div>
       </div>
-
-     
 
       {activeTab === "plan" && (
         <section>
@@ -325,8 +299,6 @@ export default function MyPlanPage() {
         </section>
       )}
 
-     
-
       {activeTab === "saved" && (
         <section>
 
@@ -375,8 +347,6 @@ export default function MyPlanPage() {
         </section>
       )}
 
-     
-
       {toast && (
         <Toast
           message={toast}
@@ -387,8 +357,6 @@ export default function MyPlanPage() {
     </main>
   );
 }
-
-
 
 function MetricCard({
   label,
@@ -412,8 +380,6 @@ function MetricCard({
   );
 }
 
-
-
 function PlanWorkoutCard({
   workout,
   completed,
@@ -434,8 +400,6 @@ function PlanWorkoutCard({
       }`}
     >
 
-      
-
       <button
         onClick={onRemove}
         aria-label={`Remove ${workout.name}`}
@@ -445,8 +409,6 @@ function PlanWorkoutCard({
       </button>
 
       <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr]">
-
-       
 
         <div className="relative h-52 sm:h-full sm:min-h-[230px]">
 
@@ -470,13 +432,9 @@ function PlanWorkoutCard({
 
         </div>
 
-       
-
         <div className="flex flex-col justify-between p-5">
 
           <div>
-
-            
 
             <div className="mb-3 flex flex-wrap gap-2">
 
@@ -493,8 +451,6 @@ function PlanWorkoutCard({
 
             </div>
 
-           
-
             <h3
               className={`pr-8 text-xl font-black uppercase tracking-[-0.03em] ${
                 completed
@@ -509,8 +465,6 @@ function PlanWorkoutCard({
               {workout.equipment} ·{" "}
               {workout.difficulty}
             </p>
-
-           
 
             <div className="mt-5 grid grid-cols-2 gap-3">
 
@@ -527,8 +481,6 @@ function PlanWorkoutCard({
             </div>
 
           </div>
-
-          
 
           <div className="mt-6 flex flex-wrap gap-2">
 
@@ -559,8 +511,6 @@ function PlanWorkoutCard({
   );
 }
 
-
-
 function SavedWorkoutCard({
   workout,
   onRemove,
@@ -571,8 +521,6 @@ function SavedWorkoutCard({
   return (
     <article className="relative overflow-hidden rounded-lg border border-[#292c32] bg-[#131519] transition hover:border-[#3a3d43]">
 
-     
-
       <button
         onClick={onRemove}
         aria-label={`Remove ${workout.name} from saved`}
@@ -582,8 +530,6 @@ function SavedWorkoutCard({
       </button>
 
       <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr]">
-
-       
 
         <div className="relative h-52 sm:h-full sm:min-h-[210px]">
 
@@ -599,13 +545,9 @@ function SavedWorkoutCard({
 
         </div>
 
-        
-
         <div className="flex flex-col justify-between p-5">
 
           <div>
-
-           
 
             <div className="mb-3 flex flex-wrap gap-2">
 
@@ -622,8 +564,6 @@ function SavedWorkoutCard({
 
             </div>
 
-            
-
             <h3 className="pr-8 text-xl font-black uppercase tracking-[-0.03em] text-white">
               {workout.name}
             </h3>
@@ -632,8 +572,6 @@ function SavedWorkoutCard({
               {workout.equipment} ·{" "}
               {workout.difficulty}
             </p>
-
-          
 
             <div className="mt-5 grid grid-cols-2 gap-3">
 
@@ -650,8 +588,6 @@ function SavedWorkoutCard({
             </div>
 
           </div>
-
-         
 
           <div className="mt-6">
 
@@ -670,8 +606,6 @@ function SavedWorkoutCard({
     </article>
   );
 }
-
-
 
 function MiniStat({
   label,
@@ -694,8 +628,6 @@ function MiniStat({
     </div>
   );
 }
-
-
 
 function EmptyState({
   title,
