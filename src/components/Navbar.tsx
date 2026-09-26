@@ -3,21 +3,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useWorkout } from "@/context/WorkoutContext";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const { plan, saved } = useWorkout();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[#25272c] bg-[#0d0e10]/95 backdrop-blur-md">
       <nav className="relative mx-auto max-w-[1280px] px-6 sm:px-8 lg:px-6">
 
-       
         <div className="flex h-20 items-center justify-between">
 
-          
+        
           <div className="flex items-center gap-3">
 
-          
+            
             <button
               type="button"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -53,11 +55,10 @@ export default function Navbar() {
               )}
             </button>
 
-            
             <Link
               href="/"
-              className="flex items-center gap-2"
               onClick={() => setMenuOpen(false)}
+              className="flex items-center gap-2"
             >
               <Image
                 src="/assets/logo.png"
@@ -96,7 +97,6 @@ export default function Navbar() {
           
           <div className="hidden items-center gap-5 md:flex">
 
-            
             <Link
               href="/my-plan"
               className="flex items-center gap-2 text-xs text-[#92959d] transition hover:text-white"
@@ -104,11 +104,10 @@ export default function Navbar() {
               <span>Plan</span>
 
               <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#ccff00] px-1.5 text-[10px] font-bold text-black">
-                0
+                {plan.length}
               </span>
             </Link>
 
-            
             <Link
               href="/my-plan"
               className="flex items-center gap-2 text-xs text-[#92959d] transition hover:text-white"
@@ -116,7 +115,7 @@ export default function Navbar() {
               <span>Saved</span>
 
               <span className="flex h-5 min-w-5 items-center justify-center rounded-full border border-[#3a3d43] px-1.5 text-[10px] text-[#92959d]">
-                0
+                {saved.length}
               </span>
             </Link>
 
@@ -126,11 +125,10 @@ export default function Navbar() {
           <div className="w-9 md:hidden" />
         </div>
 
-        
+      
         {menuOpen && (
           <div className="border-t border-[#25272c] py-5 md:hidden">
 
-            
             <div className="flex flex-col gap-2">
 
               <Link
@@ -154,7 +152,6 @@ export default function Navbar() {
            
             <div className="mt-4 flex items-center gap-4 border-t border-[#25272c] pt-4">
 
-             
               <Link
                 href="/my-plan"
                 onClick={() => setMenuOpen(false)}
@@ -163,11 +160,10 @@ export default function Navbar() {
                 <span>Plan</span>
 
                 <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#ccff00] px-1.5 text-[10px] font-bold text-black">
-                  0
+                  {plan.length}
                 </span>
               </Link>
 
-              
               <Link
                 href="/my-plan"
                 onClick={() => setMenuOpen(false)}
@@ -176,7 +172,7 @@ export default function Navbar() {
                 <span>Saved</span>
 
                 <span className="flex h-5 min-w-5 items-center justify-center rounded-full border border-[#3a3d43] px-1.5 text-[10px] text-[#92959d]">
-                  0
+                  {saved.length}
                 </span>
               </Link>
 
