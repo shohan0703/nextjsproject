@@ -40,30 +40,41 @@ export function WorkoutProvider({
 }) {
   const [plan, setPlan] = useState<Workout[]>([]);
   const [saved, setSaved] = useState<Workout[]>([]);
+  const [loaded, setLoaded] = useState(false);
 
- 
+  
   useEffect(() => {
-    const storedPlan = localStorage.getItem("fitlog-plan");
-    const storedSaved = localStorage.getItem("fitlog-saved");
+    try {
+      const storedPlan = localStorage.getItem("fitlog-plan");
+      const storedSaved = localStorage.getItem("fitlog-saved");
 
-    if (storedPlan) {
-      setPlan(JSON.parse(storedPlan));
-    }
+      if (storedPlan) {
+        setPlan(JSON.parse(storedPlan));
+      }
 
-    if (storedSaved) {
-      setSaved(JSON.parse(storedSaved));
+      if (storedSaved) {
+        setSaved(JSON.parse(storedSaved));
+      }
+    } catch (error) {
+      console.error("Failed to load FitLog data:", error);
+    } finally {
+      setLoaded(true);
     }
   }, []);
 
   
   useEffect(() => {
-    localStorage.setItem("fitlog-plan", JSON.stringify(plan));
-  }, [plan]);
+    if (!loaded) return;
 
- 
+    localStorage.setItem("fitlog-plan", JSON.stringify(plan));
+  }, [plan, loaded]);
+
+  
   useEffect(() => {
+    if (!loaded) return;
+
     localStorage.setItem("fitlog-saved", JSON.stringify(saved));
-  }, [saved]);
+  }, [saved, loaded]);
 
   const addToPlan = (workout: Workout) => {
     setPlan((current) => {
@@ -76,7 +87,9 @@ export function WorkoutProvider({
   };
 
   const removeFromPlan = (id: number) => {
-    setPlan((current) => current.filter((item) => item.id !== id));
+    setPlan((current) =>
+      current.filter((item) => item.id !== id)
+    );
   };
 
   const saveWorkout = (workout: Workout) => {
@@ -90,7 +103,9 @@ export function WorkoutProvider({
   };
 
   const removeFromSaved = (id: number) => {
-    setSaved((current) => current.filter((item) => item.id !== id));
+    setSaved((current) =>
+      current.filter((item) => item.id !== id)
+    );
   };
 
   const isInPlan = (id: number) => {
@@ -123,7 +138,9 @@ export function useWorkout() {
   const context = useContext(WorkoutContext);
 
   if (!context) {
-    throw new Error("useWorkout must be used inside WorkoutProvider");
+    throw new Error(
+      "useWorkout must be used inside WorkoutProvider"
+    );
   }
 
   return context;
